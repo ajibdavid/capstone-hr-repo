@@ -1,16 +1,26 @@
 import { router } from "expo-router";
 import {
+  Image,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function VerifyOtpScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
+        <View>
+          <Image
+   source={require("../../assets/logo.png")}
+     style={{ 
+       width: 200, 
+       height: 80,
+       alignSelf: "center",
+       resizeMode: "contain" }}/>
+        </View>
         <View
           style={{
             paddingHorizontal: 24,
@@ -51,7 +61,20 @@ export default function VerifyOtpScreen() {
             <TextInput style={boxStyle} maxLength={1} />
             <TextInput style={boxStyle} maxLength={1} />
           </View>
+          <View>
+             <Text 
+          style = {{
+            marginTop: 50,
+            textAlign: 'center',
+            fontWeight: "bold",
+            fontSize: 14,
+            color: "grey"
+          }}>
+            Resend Code
+          </Text>
 
+          </View>
+          
           <TouchableOpacity
            onPress={() => router.push("/create-new-password")}
             style={{
@@ -69,9 +92,21 @@ export default function VerifyOtpScreen() {
                 fontWeight: "600",
               }}
             >
-              Verify Code
+            Continue
             </Text>
           </TouchableOpacity>
+
+          <Text
+          style = {{
+            marginTop: 90,
+            alignSelf: "center",
+            fontWeight: "bold",
+            fontSize: 18,
+            color: "blue"
+
+          }}>
+            I have a password reset link instead
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>

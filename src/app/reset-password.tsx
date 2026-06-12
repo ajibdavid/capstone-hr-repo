@@ -56,7 +56,7 @@ export default function ResetPasswordScreen() {
               fontWeight: "600",
             }}
           >
-            Email Address
+            Comapny Email Address
           </Text>
 
           <TextInput
@@ -80,7 +80,7 @@ export default function ResetPasswordScreen() {
           </Text>
 
           <TextInput
-            placeholder="Enter your employee ID"
+            placeholder="Enter your employee ID (Optional)"
             style={{
               backgroundColor: "#F1F3F5",
               borderRadius: 10,
@@ -109,6 +109,18 @@ export default function ResetPasswordScreen() {
               Send Reset Link
             </Text>
           </TouchableOpacity>
+          <Text
+           onPress={() => router.push("/login")}
+          style = {{
+            fontSize: 12,
+    fontWeight: "bold",
+    color: "blue",
+    textAlign: "center",
+            marginTop: 10,
+
+          }}>
+            Return to Login
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>

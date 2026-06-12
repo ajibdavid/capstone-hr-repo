@@ -1,10 +1,11 @@
 import { router } from "expo-router";
 import {
+  Image,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -12,6 +13,15 @@ export default function CreateNewPasswordScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
+        <View>
+          <Image
+   source={require("../../assets/logo.png")}
+     style={{ 
+       width: 200, 
+       height: 80,
+       alignSelf: "center",
+       resizeMode: "contain" }}/>
+        </View>
         <View
           style={{
             paddingHorizontal: 24,
@@ -98,6 +108,17 @@ export default function CreateNewPasswordScreen() {
               Update Password
             </Text>
           </TouchableOpacity>
+        </View>
+        <View>
+          <Text
+          style = {{
+            fontWeight:"normal",
+            color: "grey",
+            marginTop: 20,
+            alignSelf: "center"
+          }}>
+            2026 HRFlow Africa. All right reserved.
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -1,10 +1,10 @@
 import { router } from "expo-router";
 import {
-    Image,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -12,10 +12,31 @@ export default function PasswordUpdatedSuccessScreen() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView
+
         contentContainerStyle={{
           flexGrow: 1,
         }}
       >
+        <View>
+          <Image
+   source={require("../../assets/logo.png")}
+     style={{ 
+       width: 200, 
+       height: 80,
+       alignSelf: "center",
+       resizeMode: "contain" }}/>
+        </View>
+        <Text
+        style = {{
+          fontWeight:"bold",
+          fontSize:25,
+          alignSelf: "center",
+          color: "black",
+          marginTop: 25
+
+        }}>
+          SUCCESS!
+        </Text>
         <View
           style={{
             flex: 1,

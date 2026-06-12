@@ -4,8 +4,10 @@ import { useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  Image,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity
@@ -42,8 +44,12 @@ export default function LoginScreen() {
           }),
         }
       );
+      
+ const data = await response.json();
+console.log("Status:", response.status);
+console.log("Response:", data);
 
-      const data = await response.json();
+     
 
       if (response.ok) {
         await AsyncStorage.setItem(
@@ -81,6 +87,7 @@ export default function LoginScreen() {
   };
 
   return (
+    <ScrollView>
     <SafeAreaView
       style={{
         flex: 1,
@@ -99,6 +106,16 @@ export default function LoginScreen() {
           paddingHorizontal: 24,
         }}
       >
+        <Image
+            source={require("../../assets/logo.png")}
+            style={{
+              width: 250,
+              height: 250,
+              alignSelf: "center"
+            }}
+            resizeMode="contain"
+          />
+
         <Text
           style={{
             fontSize: 32,
@@ -208,5 +225,6 @@ export default function LoginScreen() {
         </TouchableOpacity>
       </KeyboardAvoidingView>
     </SafeAreaView>
+    </ScrollView>
   );
 }
