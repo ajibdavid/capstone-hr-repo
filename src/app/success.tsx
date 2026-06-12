@@ -1,9 +1,9 @@
 import { router } from "expo-router";
 import {
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -39,7 +39,7 @@ export default function AccountSuccessScreen() {
           </Text>
 
           <TouchableOpacity
-            onPress={() => router.push("/dashboard")}
+            onPress={() => router.push("/login")}
             style={{
               backgroundColor: "#3F5AE0",
               marginTop: 60,

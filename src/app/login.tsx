@@ -1,134 +1,212 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import { useState } from "react";
 import {
-    Image,
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  TextInput,
+  TouchableOpacity
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LoginScreen() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert(
+        "Missing Information",
+        "Please enter your email and password."
+      );
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        "https://hrflow-backend-nf0t.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        await AsyncStorage.setItem(
+          "token",
+          data.token
+        );
+
+        await AsyncStorage.setItem(
+          "user",
+          JSON.stringify(data.user)
+        );
+
+        Alert.alert(
+          "Success",
+          "Login Successful"
+        );
+
+        router.replace("/dashboard");
+      } else {
+        Alert.alert(
+          "Login Failed",
+          data.message || "Invalid Credentials"
+        );
+      }
+    } catch (error) {
+      Alert.alert(
+        "Network Error",
+        "Unable to connect to server."
+      );
+
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView>
-        <View
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+      }}
+    >
+      <KeyboardAvoidingView
+        behavior={
+          Platform.OS === "ios"
+            ? "padding"
+            : "height"
+        }
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          paddingHorizontal: 24,
+        }}
+      >
+        <Text
           style={{
-            paddingHorizontal: 24,
-            paddingTop: 40,
+            fontSize: 32,
+            fontWeight: "700",
+            marginBottom: 10,
           }}
         >
-<Image
-  source={require("../../assets/logo.png")}
-  style={{
-    width: 180,
-    height: 70,
-    alignSelf: "center",
-  }}
-  resizeMode="contain"
-/>
-<Text
-  style={{
-    textAlign: "center",
-    fontSize: 26,
-    fontWeight: "700",
-    marginTop: 10,
-  }}
->
-  Welcome Back, {UserActivation.name}
-</Text>
-<Text
-  style={{
-    textAlign: "center",
-    color: "gray",
-    marginTop: 5,
-  }}
->
-  Continue to your workspace
-</Text>
-<Text 
-style = {{
-    marginTop: 40,
-    marginBottom: 8,
-    fontWeight:"600"
-}}>
-  Email address
-</Text>
- <TextInput
-  placeholder = "Enter email address here"
-  keyboardType="email-address"
-  style = {{
-    borderRadius: 10,
-    padding: 15, 
-    backgroundColor: "#F1F3F5"
-  }}
-  />
-  <Text
-  style={{
-    marginTop: 20,
-    marginBottom: 8,
-    fontWeight: "600",
-  }}
->
-  Password
-</Text>
+          Welcome Back
+        </Text>
 
-<TextInput
-  placeholder="Enter your password"
-  secureTextEntry
-  style={{
-    backgroundColor: "#F1F3F5",
-    borderRadius: 10,
-    padding: 15,
-  }}
-/>
-<View
-  style={{
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 15,
-    alignItems: "center",
-  }}
->
-  <Text>
-    ☐ Remember Me
-  </Text>
+        <Text
+          style={{
+            color: "gray",
+            marginBottom: 30,
+          }}
+        >
+          Continue to your workspace
+        </Text>
 
-  <TouchableOpacity
-  onPress={() => router.push("/reset-password")}
->
-  <Text
-    style={{
-      color: "blue",
-    }}
-  >
-    Forgot Password?
-  </Text>
-</TouchableOpacity>
-</View>
-<TouchableOpacity
- onPress={() => router.push("/login")}
-  style={{
-    backgroundColor: "#3F5AE0",
-    marginTop: 40,
-    borderRadius: 10,
-    paddingVertical: 16,
-    alignItems: "center",
-  }}
->
-  <Text
-    style={{
-      color: "white",
-      fontSize: 16,
-      fontWeight: "600",
-    }}
-  >
-    Login
-  </Text>
-</TouchableOpacity>
-        </View>
-      </ScrollView>
+        <Text
+          style={{
+            marginBottom: 8,
+            fontWeight: "600",
+          }}
+        >
+          Email Address
+        </Text>
+
+        <TextInput
+          placeholder="Enter your email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          value={email}
+          onChangeText={setEmail}
+          style={{
+            backgroundColor: "#F1F3F5",
+            padding: 15,
+            borderRadius: 10,
+            marginBottom: 20,
+          }}
+        />
+
+        <Text
+          style={{
+            marginBottom: 8,
+            fontWeight: "600",
+          }}
+        >
+          Password
+        </Text>
+
+        <TextInput
+          placeholder="Enter your password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+          style={{
+            backgroundColor: "#F1F3F5",
+            padding: 15,
+            borderRadius: 10,
+          }}
+        />
+
+        <TouchableOpacity
+          onPress={() =>
+            router.push("/reset-password")
+          }
+          style={{
+            alignSelf: "flex-end",
+            marginTop: 12,
+          }}
+        >
+          <Text
+            style={{
+              color: "#3F5AE0",
+              fontWeight: "600",
+            }}
+          >
+            Forgot Password?
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={handleLogin}
+          disabled={loading}
+          style={{
+            backgroundColor: "#3F5AE0",
+            marginTop: 30,
+            borderRadius: 10,
+            paddingVertical: 16,
+            alignItems: "center",
+          }}
+        >
+          {loading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text
+              style={{
+                color: "white",
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
+              Login
+            </Text>
+          )}
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

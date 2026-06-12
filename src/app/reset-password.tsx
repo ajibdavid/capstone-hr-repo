@@ -1,13 +1,13 @@
+import { router } from "expo-router";
 import {
-    Image,
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 export default function ResetPasswordScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -88,7 +88,9 @@ export default function ResetPasswordScreen() {
             }}
           />
 
-          <TouchableOpacity
+          <TouchableOpacity   
+          
+  onPress={() => router.push("/otp")}
             style={{
               backgroundColor: "#3F5AE0",
               marginTop: 40,
